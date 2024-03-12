@@ -82,6 +82,15 @@ const fetchVacations = async()=> {
   return response.rows;
 };
 
+const destroyVacation = async({ id, user_id })=> {
+  const SQL = `
+    DELETE FROM 
+    vacations
+    WHERE id = $1 AND user_id = $2
+  `;
+  await client.query(SQL, [id, user_id]);
+};
+
 module.exports = {
   client,
   createTables,
@@ -90,5 +99,6 @@ module.exports = {
   fetchUsers,
   fetchPlaces,
   fetchVacations,
-  createVacation
+  createVacation,
+  destroyVacation
 };

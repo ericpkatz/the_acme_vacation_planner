@@ -6,7 +6,8 @@ const {
   fetchUsers,
   fetchPlaces,
   fetchVacations,
-  createVacation
+  createVacation,
+  destroyVacation
 } = require('./db');
 
 const init = async()=> {
@@ -32,6 +33,10 @@ const init = async()=> {
     createVacation({ user_id: moe.id, place_id: berlin.id, travel_date: '04/01/2024' }),
     createVacation({ user_id: lucy.id, place_id: barcelona.id, travel_date: '04/01/2024' }),
   ]);
+  console.log(await fetchVacations());
+
+  await destroyVacation(vacations[0]);
+
   console.log(await fetchVacations());
 
 };
