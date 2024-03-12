@@ -83,7 +83,18 @@ const fetchVacations = async()=> {
 };
 
 const destroyVacation = async({ id, user_id })=> {
-  const SQL = `
+  let SQL = `
+    SELECT *
+    FROM vacations
+    WHERE id = $1 AND user_id = $2
+  `;
+  const response = await client.query(SQL, [id, user_id]);
+  if(!response.rows.length){
+    const error = Error('no record found');
+    error.status = 500;
+    throw error;
+  }
+  SQL = `
     DELETE FROM 
     vacations
     WHERE id = $1 AND user_id = $2
